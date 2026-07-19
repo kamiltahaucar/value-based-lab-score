@@ -75,6 +75,12 @@ def get_selection(item_id):
 def reset_all():
     for it in ITEMS:
         st.session_state[_key(it["id"])] = None
+    st.session_state["open_sub"] = None
+
+
+def remember_open(exp_id):
+    """Keep the expander the user is editing open across reruns."""
+    st.session_state["open_sub"] = exp_id
 
 
 # --------------------------------------------------------------------------- #
@@ -182,7 +188,7 @@ def render_sidebar(proc_score, total, answered, rows):
 # --------------------------------------------------------------------------- #
 # Item widget
 # --------------------------------------------------------------------------- #
-def render_item(it):
+def render_item(it, exp_id):
     weight = it["weight"]
     st.markdown(f"**{it['item']}**  "
                 f"<span class='weight-tag'>· weight {weight:.3f}</span>",
@@ -200,6 +206,8 @@ def render_item(it):
         index=None,
         horizontal=True,
         label_visibility="collapsed",
+        on_change=remember_open,
+        args=(exp_id,),
     )
     lvl = get_selection(it["id"])
     if lvl is not None:
@@ -246,6 +254,7 @@ st.markdown("#### Domain overview")
 st.bar_chart(chart_df, height=260)
 
 # Tabs per process
+exp_counter = 0          # stable, deterministic id per expander across reruns
 tabs = st.tabs([p for p in PROCESS_ORDER])
 for tab, proc in zip(tabs, PROCESS_ORDER):
     with tab:
@@ -273,19 +282,21 @@ for tab, proc in zip(tabs, PROCESS_ORDER):
                     subs.append((it["subheading"], []))
                 subs[-1][1].append(it)
             for sub_name, sub_items in subs:
+                exp_id = f"exp_{exp_counter}"
+                exp_counter += 1
                 answered_sub = sum(
                     1 for it in sub_items if get_selection(it["id"]) is not None
                 )
                 with st.expander(
                     f"{sub_name}  ·  {answered_sub}/{len(sub_items)} answered",
-                    expanded=False,
+                    expanded=(st.session_state.get("open_sub") == exp_id),
                 ):
                     st.markdown(
                         f"<div class='subhead'>{sub_name}</div>",
                         unsafe_allow_html=True,
                     )
                     for it in sub_items:
-                        render_item(it)
+                        render_item(it, exp_id)
 
 st.divider()
 st.caption(
