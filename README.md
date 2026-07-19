@@ -54,5 +54,37 @@ automatically.
 
 - Nothing is stored on a server; each visitor's answers live only in their own
   browser session.
-- To edit items, weights or level labels, change `value_based_items.json` — no
-  code change needed.
+- **Weights are automatic.** Each process has a fixed total (20/20/20/30/10 = 100)
+  and every item in it gets an equal share, so the total always stays 100 no
+  matter how many items a process has.
+
+## Adding, editing or removing an item
+
+Edit only `value_based_items.json` — no code change, no weight math.
+
+To **add** an item, copy this block into the `"items"` list (put it next to the
+other items of the same subheading so it appears in the right place):
+
+```json
+{
+  "id": "i61",
+  "process": "Traceability through total testing process",
+  "section": "Pre-analytical phase",
+  "subheading": "Test request and demand management",
+  "item": "My new item name",
+  "explanation": "Short description shown under the item."
+}
+```
+
+- `id` must be **unique** (any short text, e.g. `i61`).
+- `process`, `section`, `subheading` must be spelled **exactly** like existing
+  ones to land in the right tab/group. A new spelling creates a new group.
+- No `weight` needed — the app recomputes shares automatically.
+
+To **remove** an item, delete its block. To **edit** wording, change the `item`
+or `explanation` text. Commit the change to GitHub and the site redeploys.
+
+> Adding a brand-new **process** (a whole new domain) also needs its total added
+> to `meta.process_order` and `meta.process_max`, and the five totals must still
+> sum to 100.
+

@@ -34,7 +34,19 @@ LEVEL_LABELS = META["level_labels"]
 PROCESS_ORDER = META["process_order"]
 PROCESS_MAX = META["process_max"]
 TOTAL_MAX = META["total_max"]                 # 100
-N_ITEMS = META["n_items"]
+N_ITEMS = len(ITEMS)
+
+# --- Weights are derived automatically -------------------------------------- #
+# Each process has a fixed total (PROCESS_MAX). Every item in that process gets
+# an equal share, so the five processes always sum to 100 no matter how many
+# items you add or remove. To add an item you therefore only need to add its
+# JSON block — no weight to compute. (Any "weight" left in the JSON is ignored.)
+from collections import Counter
+
+_proc_counts = Counter(it["process"] for it in ITEMS)
+for _it in ITEMS:
+    proc = _it["process"]
+    _it["weight"] = PROCESS_MAX[proc] / _proc_counts[proc]
 
 # --------------------------------------------------------------------------- #
 # Page config & light styling
