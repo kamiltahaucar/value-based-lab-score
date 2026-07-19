@@ -1,0 +1,637 @@
+{
+  "meta": {
+    "title": "Value-Based Laboratory Score",
+    "score_levels": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "level_labels": {
+      "0": "Not in place",
+      "0.25": "Initial / planned",
+      "0.5": "Partially implemented",
+      "0.75": "Largely implemented",
+      "1.0": "Fully implemented"
+    },
+    "process_order": [
+      "Traceability through total testing process",
+      "Level of automation and digitalization",
+      "Quality of laboratory information",
+      "Clinical interaction",
+      "Innovation and research"
+    ],
+    "process_max": {
+      "Traceability through total testing process": 20.0,
+      "Level of automation and digitalization": 20.0,
+      "Quality of laboratory information": 20.0,
+      "Clinical interaction": 30.0,
+      "Innovation and research": 10.0
+    },
+    "total_max": 100.0,
+    "n_items": 60
+  },
+  "items": [
+    {
+      "id": "i01",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Test request and demand management",
+      "item": "Consensually defined laboratory profiles (LOPs)",
+      "explanation": "Agreed sets of laboratory tests for specific clinical conditions.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i02",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Test request and demand management",
+      "item": "Computerized provider order entry (CPOE)",
+      "explanation": "Electronic ordering of laboratory tests by clinicians.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i03",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Test request and demand management",
+      "item": "Adherence to clinical guidelines (e.g. EFLM)",
+      "explanation": "Compliance with established laboratory guidelines.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i04",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Test request and demand management",
+      "item": "Rule-based systems",
+      "explanation": "Automated decision rules in laboratory processes.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i05",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Test request and demand management",
+      "item": "Minimum retesting interval",
+      "explanation": "Defined minimum time before a test can be repeated.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i06",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Test request and demand management",
+      "item": "Automated rule-based reflex and reflective testing",
+      "explanation": "Automatic additional testing based on initial results.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i07",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Test request and demand management",
+      "item": "Sampling time and sampling procedures",
+      "explanation": "Sampling time and sampling procedures available as information to users",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i08",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Patient and sample identification",
+      "item": "Automated patient ID verification",
+      "explanation": "Electronic confirmation of patient identity.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i09",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Patient and sample identification",
+      "item": "Barcode sample collection / wristband scanning",
+      "explanation": "Barcode sample collection with patient wristband scanning or other positive patient identification tools",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i10",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Patient and sample identification",
+      "item": "Patient blood management",
+      "explanation": "To reduce the volumes of collected blood samples",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i11",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Patient and sample identification",
+      "item": "End-to-end specimen tracking",
+      "explanation": "Full tracking of samples from collection to reporting.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i12",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Patient and sample identification",
+      "item": "Order-of-draw prompts and traceability recording",
+      "explanation": "System-based guidance on the correct tube collection sequence, with documentation to ensure proper sampling and prevent cross-contamination.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i13",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Patient and sample identification",
+      "item": "Information on sample type and volume required",
+      "explanation": "Clear specification of the correct sample type and minimum volume needed for each test.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i14",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Sample transportation",
+      "item": "Defined transport methods, time and temperature ranges",
+      "explanation": "Definition of transportation methods ( e.g. pneumatic tube/courier), maximum time and temperature range (min-max) for all types of samples",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i15",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Sample transportation",
+      "item": "Upright orientation monitoring",
+      "explanation": "Monitoring correct tube positioning during transport.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i16",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Sample transportation",
+      "item": "Real-time specimen tracking",
+      "explanation": "Live tracking of sample location and status.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i17",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Sample receipt and rejection",
+      "item": "Automated and safe sample check-in",
+      "explanation": "Electronic and secure sample reception.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i18",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Sample receipt and rejection",
+      "item": "Defined acceptance/rejection rules",
+      "explanation": "Definition of sample acceptance and rejection rules and exceptions in term of short-time stability of measurands",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i19",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Sample receipt and rejection",
+      "item": "Monitoring of rejection rates and feedback",
+      "explanation": "Monitoring of sample rejection rates and feedback to clinicians/phlebotomy teams",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i20",
+      "process": "Traceability through total testing process",
+      "section": "Pre-analytical phase",
+      "subheading": "Sample receipt and rejection",
+      "item": "Sample dilution management",
+      "explanation": "Controlled handling of diluted specimens.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i21",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Real-time specimen workflow tracking",
+      "item": "Continuous monitoring of sample processes",
+      "explanation": "Ongoing oversight of laboratory workflows.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i22",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Real-time specimen workflow tracking",
+      "item": "Estimation and monitoring of analytical TAT",
+      "explanation": "Measurement and control of turnaround time.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i23",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Real-time specimen workflow tracking",
+      "item": "Alerts in place when TAT is breached for urgent specimens",
+      "explanation": "Automatic notifications when turnaround time exceeds limits for urgent tests.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i24",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Standardization",
+      "item": "Standardized methods with metrological traceability",
+      "explanation": "Standardized methods according to metrological traceability (number of measurands) and/or alternative harmonization procedures when metrological traceability is not possible (number of measurands)",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i25",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Standardization",
+      "item": "Inter-platform agreement",
+      "explanation": "Consistency of results between different analytical platforms within the laboratory.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i26",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Standardization",
+      "item": "Measurement uncertainty estimation and update",
+      "explanation": "Estimation and updating of measurement uncertainty (MU) for measurands (number)",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i27",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Standardization",
+      "item": "Adoption of recommended methods",
+      "explanation": "Implementation of guideline-supported methods.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i28",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Standardization",
+      "item": "Traceability and commutability of calibrators",
+      "explanation": "Alignment of calibrators to reference standards and verified comparability with patient samples.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i29",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Standardization",
+      "item": "Traceability of reagents and control materials",
+      "explanation": "Alignment to reference standards and verified comparability with patient samples.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i30",
+      "process": "Traceability through total testing process",
+      "section": "Analytical phase",
+      "subheading": "Standardization",
+      "item": "Adoption of appropriated IQC rules and materials",
+      "explanation": "Use of suitable internal QC rules and third-party controls at clinically relevant concentrations.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i31",
+      "process": "Traceability through total testing process",
+      "section": "Post-analytical phase",
+      "subheading": "Validation and plausibility check",
+      "item": "Automated verification and validation",
+      "explanation": "Automated verification and validation of the analytical run, System-based result approval checks.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i32",
+      "process": "Traceability through total testing process",
+      "section": "Post-analytical phase",
+      "subheading": "Validation and plausibility check",
+      "item": "Delta check and plausibility tools",
+      "explanation": "Tools to detect unexpected result changes.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i33",
+      "process": "Traceability through total testing process",
+      "section": "Post-analytical phase",
+      "subheading": "Turnaround time",
+      "item": "Monitoring TAT for critical measurands",
+      "explanation": "Turnaround time (TAT) monitoring for critical measurands, including:\nCardiac troponin, Potassium, INR , Intraoperative PTH, etc.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i34",
+      "process": "Traceability through total testing process",
+      "section": "Post-analytical phase",
+      "subheading": "Tracking report notification and acknowledgment",
+      "item": "Alerts for delayed or incorrect reports",
+      "explanation": "Alert for reports submitted late or in error",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i35",
+      "process": "Traceability through total testing process",
+      "section": "Post-analytical phase",
+      "subheading": "Tracking report notification and acknowledgment",
+      "item": "Reporting and monitoring of critical results",
+      "explanation": "Reporting of critical results (including methods and standardized definitions), with defined targets for acknowledgment time and ongoing monitoring.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i36",
+      "process": "Traceability through total testing process",
+      "section": "Post-analytical phase",
+      "subheading": "Measurement units",
+      "item": "Use of recommended/SI units",
+      "explanation": "Measurement units (number of measurands reported with recommended/SI units)",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i37",
+      "process": "Traceability through total testing process",
+      "section": "Post-analytical phase",
+      "subheading": "Reporting quality",
+      "item": "Verification of reference intervals",
+      "explanation": "Estimation and/or verification of reference intervals by laboratory for all measurands.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i38",
+      "process": "Traceability through total testing process",
+      "section": "Post-analytical phase",
+      "subheading": "Reporting quality",
+      "item": "Demonstrating traceability of the source of reference intervals",
+      "explanation": "Documented proof of the origin of reference intervals.",
+      "weight": 0.5263157894736842,
+      "weight_formula": "20/38"
+    },
+    {
+      "id": "i39",
+      "process": "Level of automation and digitalization",
+      "section": "Automation",
+      "subheading": "Pre-analytical automation",
+      "item": "Automated pre-analytical workstations",
+      "explanation": "Pre-analytical workstation/automated sample management systems, number of manual tasks and type of manual procedures",
+      "weight": 2.857142857142857,
+      "weight_formula": "20/7"
+    },
+    {
+      "id": "i40",
+      "process": "Level of automation and digitalization",
+      "section": "Automation",
+      "subheading": "Analytical automation",
+      "item": "Total laboratory automation and consolidation",
+      "explanation": "Level of analytical automation in all areas of laboratory activities (clinical chemistry, hematology, coagulation, etc.)",
+      "weight": 2.857142857142857,
+      "weight_formula": "20/7"
+    },
+    {
+      "id": "i41",
+      "process": "Level of automation and digitalization",
+      "section": "Automation",
+      "subheading": "Post-analytical automation",
+      "item": "Autoverification and add-on processing",
+      "explanation": "Autoverification of patient results, automatic processing of add-on requests",
+      "weight": 2.857142857142857,
+      "weight_formula": "20/7"
+    },
+    {
+      "id": "i42",
+      "process": "Level of automation and digitalization",
+      "section": "Digitalization",
+      "subheading": "System integration",
+      "item": "LIS integration with EMR/HIS",
+      "explanation": "Integration of the LIS with Electronic Medical Records/Hospital information systems",
+      "weight": 2.857142857142857,
+      "weight_formula": "20/7"
+    },
+    {
+      "id": "i43",
+      "process": "Level of automation and digitalization",
+      "section": "Digitalization",
+      "subheading": "Data interoperability",
+      "item": "Use of HL7, FHIR, OpenEHR, ASTM",
+      "explanation": "Communication standards: use of OpenEHR, HL7, FHIR, ASTM, and structured formats for data exchange;\nIntegration coverage: degree of integration between LIS, HIS, instruments, middleware, and external networks;\nBidirectionality and completeness: ability to support bidirectional data exchange and the quality/extent of transferred information.",
+      "weight": 2.857142857142857,
+      "weight_formula": "20/7"
+    },
+    {
+      "id": "i44",
+      "process": "Level of automation and digitalization",
+      "section": "Digitalization",
+      "subheading": "Data interoperability",
+      "item": "Standard codifications (LOINC, SNOMED-CT, UCUM)",
+      "explanation": "Data quality and standardisation: use of standard codifications (LOINC, SNOMED-CT, UCUM), shared dictionaries, and data governance processes;\nScalability and flexibility: ease of adding new instruments or systems through open architectures and APIs.",
+      "weight": 2.857142857142857,
+      "weight_formula": "20/7"
+    },
+    {
+      "id": "i45",
+      "process": "Level of automation and digitalization",
+      "section": "Digitalization",
+      "subheading": "Data governance",
+      "item": "Security, auditing, regulatory compliance",
+      "explanation": "Cybersecurity, data protection, auditing, secure protocols, and regulatory compliance.",
+      "weight": 2.857142857142857,
+      "weight_formula": "20/7"
+    },
+    {
+      "id": "i46",
+      "process": "Quality of laboratory information",
+      "section": "Quality systems",
+      "subheading": "Internal quality control",
+      "item": "IQC procedures and control materials",
+      "explanation": "Definition of procedures for IQC, including the types of control materials (e.g. commercial independent QC materials, patient pools, …), and procedures for process control when relevant IQC is unavailable/difficult (tests on capillary blood, urine imagines, etc.)",
+      "weight": 3.3333333333333335,
+      "weight_formula": "10/3"
+    },
+    {
+      "id": "i47",
+      "process": "Quality of laboratory information",
+      "section": "Quality systems",
+      "subheading": "External quality assessment",
+      "item": "Participation and performance in EQA/PT",
+      "explanation": "Number of measurands under control \nNumber of acceptable/optimal results and procedures for corrective and preventive actions, alternative procedures (interlaboratory comparison) when EQA/PT programs are unavailable",
+      "weight": 3.3333333333333335,
+      "weight_formula": "10/3"
+    },
+    {
+      "id": "i48",
+      "process": "Quality of laboratory information",
+      "section": "Quality systems",
+      "subheading": "Quality indicators",
+      "item": "Adoption of IFCC MQI model",
+      "explanation": "Number of adopted QIs, Monitoring of QIs over time, Adoption of alternative/additional QIs",
+      "weight": 3.3333333333333335,
+      "weight_formula": "10/3"
+    },
+    {
+      "id": "i49",
+      "process": "Quality of laboratory information",
+      "section": "Analytical performance",
+      "subheading": "Performance specifications",
+      "item": "Setting APS and measurement uncertainty",
+      "explanation": "Adoption of objective criteria in setting analytical performance characteristics, implementation of measurement uncertainty, setting of APS according to the different models",
+      "weight": 3.3333333333333335,
+      "weight_formula": "10/3"
+    },
+    {
+      "id": "i50",
+      "process": "Quality of laboratory information",
+      "section": "Clinical relevance",
+      "subheading": "Personalization",
+      "item": "Personalized RI, DL and RCV",
+      "explanation": "Use of “personalized” reference intervals (RI), decision limits (DL) and reference change values (RCV) (according to the EFLM database) \nProcedures for verification of RI recommended by manufacturers/CLSI\nNumber of measurands with decision levels (according to guidelines)\nAdoption and reporting of RCVs\nInterest in longitudinal data for achieving personalized RI/DL/RCV",
+      "weight": 3.3333333333333335,
+      "weight_formula": "10/3"
+    },
+    {
+      "id": "i51",
+      "process": "Quality of laboratory information",
+      "section": "Clinical relevance",
+      "subheading": "Interpretative support",
+      "item": "Interpretative comments and clinician interaction",
+      "explanation": "Number and quality, based on clinicians interaction/satisfaction",
+      "weight": 3.3333333333333335,
+      "weight_formula": "10/3"
+    },
+    {
+      "id": "i52",
+      "process": "Clinical interaction",
+      "section": "Clinical outcomes",
+      "subheading": "Outcome evaluation",
+      "item": "Monitoring impact of testing on outcomes",
+      "explanation": "Data on impact of testing on clinical outcomes \nProcedures for identifying/evaluating clinical outcomes\nNumber of monitored efficiency and effectiveness outcomes",
+      "weight": 6.0,
+      "weight_formula": "30/5"
+    },
+    {
+      "id": "i53",
+      "process": "Clinical interaction",
+      "section": "Clinical outcomes",
+      "subheading": "Outcome evaluation",
+      "item": "Test guideance for healthcare providers and patients",
+      "explanation": "Published information for users including details on test availability and interpretation, collection requirements and contact details for enquiries",
+      "weight": 6.0,
+      "weight_formula": "30/5"
+    },
+    {
+      "id": "i54",
+      "process": "Clinical interaction",
+      "section": "Clinical pathways",
+      "subheading": "CDTP",
+      "item": "Implementation of diagnostic-therapeutic pathways",
+      "explanation": "Implementation and revision of clinical diagnostic-therapeutic pathways (CDTP)\nNumber of consensually defined CDTP",
+      "weight": 6.0,
+      "weight_formula": "30/5"
+    },
+    {
+      "id": "i55",
+      "process": "Clinical interaction",
+      "section": "Clinical outcomes",
+      "subheading": "Outcome evaluation",
+      "item": "Multidisciplinary team and Laboratory Stewardship initiatives",
+      "explanation": "Multidisciplinary team and Laboratory Stewardship initiatives with provision of clinical advice on test selection/interpretation\nNumber and examples",
+      "weight": 6.0,
+      "weight_formula": "30/5"
+    },
+    {
+      "id": "i56",
+      "process": "Clinical interaction",
+      "section": "Organization",
+      "subheading": "Integrated diagnostics",
+      "item": "Departments of Integrated Diagnostics",
+      "explanation": "Implementation of Departments of Integrated Diagnostics \nType of departmental organization",
+      "weight": 6.0,
+      "weight_formula": "30/5"
+    },
+    {
+      "id": "i57",
+      "process": "Innovation and research",
+      "section": "Innovation",
+      "subheading": "Test innovation",
+      "item": "Validation and introduction of innovative tests",
+      "explanation": "Procedures for the validation and implementation of new tests or diagnostic systems, the removal of obsolete tests, and the verification of any test modifications. Examples and number per year.",
+      "weight": 2.5,
+      "weight_formula": "10/4"
+    },
+    {
+      "id": "i58",
+      "process": "Innovation and research",
+      "section": "Research",
+      "subheading": "Scientific activity",
+      "item": "Participation in studies and clinical trials",
+      "explanation": "Participation in academic studies related to laboratory medicine, pilot studies and clinical trials \nNumber and type",
+      "weight": 2.5,
+      "weight_formula": "10/4"
+    },
+    {
+      "id": "i59",
+      "process": "Innovation and research",
+      "section": "Research",
+      "subheading": "Scientific activity",
+      "item": "Publications, including abstracts and oral communications",
+      "explanation": "Number and type of Journals (categorized according the Q-ranking systems/Congresses)",
+      "weight": 2.5,
+      "weight_formula": "10/4"
+    },
+    {
+      "id": "i60",
+      "process": "Innovation and research",
+      "section": "Research",
+      "subheading": "Dissemination and training",
+      "item": "Staff training programs",
+      "explanation": "Training programs for laboratory staff and related evaluation procedures",
+      "weight": 2.5,
+      "weight_formula": "10/4"
+    }
+  ]
+}
