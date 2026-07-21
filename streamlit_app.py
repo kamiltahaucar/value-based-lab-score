@@ -102,15 +102,23 @@ def compute():
     """Return per-item, per-process and total achieved scores."""
     rows = []
     proc_score = {p: 0.0 for p in PROCESS_ORDER}
+    proc_unanswered = {p: 0.0 for p in PROCESS_ORDER}  # weight of blank items
+    proc_missed = {p: 0.0 for p in PROCESS_ORDER}      # points lost on answered
+    proc_counts = {p: [0, 0] for p in PROCESS_ORDER}   # [answered, total]
     answered = 0
     for it in ITEMS:
         lvl = get_selection(it["id"])
+        p = it["process"]
+        proc_counts[p][1] += 1
         if lvl is None:
             achieved = 0.0
+            proc_unanswered[p] += it["weight"]
             answered_flag = False
         else:
             achieved = lvl * it["weight"]
-            proc_score[it["process"]] += achieved
+            proc_score[p] += achieved
+            proc_missed[p] += (1.0 - lvl) * it["weight"]
+            proc_counts[p][0] += 1
             answered += 1
             answered_flag = True
         rows.append(
@@ -126,7 +134,7 @@ def compute():
             }
         )
     total = sum(proc_score.values())
-    return rows, proc_score, total, answered
+    return rows, proc_score, total, answered, proc_unanswered, proc_missed, proc_counts
 
 
 # --------------------------------------------------------------------------- #
@@ -167,7 +175,7 @@ def render_sidebar(proc_score, total, answered, rows):
             data=csv,
             file_name="value_based_score_results.csv",
             mime="text/csv",
-            use_container_width=True,
+            width='stretch',
         )
 
         # Excel with a small summary sheet
@@ -189,12 +197,12 @@ def render_sidebar(proc_score, total, answered, rows):
             data=xls_buffer.getvalue(),
             file_name="value_based_score_results.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            use_container_width=True,
+            width='stretch',
         )
 
         st.divider()
         st.button("🔄 Reset all answers", on_click=reset_all,
-                  use_container_width=True)
+                  width='stretch')
 
 
 # --------------------------------------------------------------------------- #
@@ -240,7 +248,9 @@ st.markdown(
     "out of **100**."
 )
 
-with st.expander("ℹ️ How the score levels work", expanded=False):
+# --- score-level guide (always visible) ------------------------------------ #
+with st.container(border=True):
+    st.markdown("##### ℹ️ How the score levels work")
     cols = st.columns(len(LEVELS))
     for c, lvl in zip(cols, LEVELS):
         c.markdown(f"**{lvl:g}**")
@@ -251,30 +261,74 @@ with st.expander("ℹ️ How the score levels work", expanded=False):
         "= 30/5). The five domains sum to 100 points."
     )
 
-rows, proc_score, total, answered = compute()
+(rows, proc_score, total, answered,
+ proc_unanswered, proc_missed, proc_counts) = compute()
 render_sidebar(proc_score, total, answered, rows)
 
-# Overview chart
-chart_df = pd.DataFrame(
-    {
-        "Process": PROCESS_ORDER,
-        "Achieved": [proc_score[p] for p in PROCESS_ORDER],
-        "Max": [PROCESS_MAX[p] for p in PROCESS_ORDER],
-    }
-).set_index("Process")
-st.markdown("#### Domain overview")
-st.bar_chart(chart_df, height=260)
+# --- Domain overview: stacked bars ------------------------------------------ #
+# Green  = points achieved
+# Orange = potential of unanswered items (their full weight)
+# Red    = points missed on answered items ((1 - level) × weight)
+# The three segments always add up to each domain's maximum.
+import altair as alt
 
-# Tabs per process
+seg_order = ["Achieved", "Unanswered", "Missed"]
+seg_colors = {"Achieved": "#2e9e4f", "Unanswered": "#f2a33c", "Missed": "#d64545"}
+long_rows = []
+for p in PROCESS_ORDER:
+    long_rows += [
+        {"Process": p, "Segment": "Achieved", "Points": round(proc_score[p], 3)},
+        {"Process": p, "Segment": "Unanswered", "Points": round(proc_unanswered[p], 3)},
+        {"Process": p, "Segment": "Missed", "Points": round(proc_missed[p], 3)},
+    ]
+chart_long = pd.DataFrame(long_rows)
+
+st.markdown("#### Domain overview")
+chart = (
+    alt.Chart(chart_long)
+    .mark_bar()
+    .encode(
+        x=alt.X("Process:N", sort=PROCESS_ORDER, title=None,
+                axis=alt.Axis(labelAngle=-25, labelLimit=220)),
+        y=alt.Y("Points:Q", title="Points",
+                scale=alt.Scale(domain=[0, max(PROCESS_MAX.values())])),
+        color=alt.Color(
+            "Segment:N",
+            sort=seg_order,
+            scale=alt.Scale(domain=seg_order,
+                            range=[seg_colors[s] for s in seg_order]),
+            legend=alt.Legend(orient="top", title=None),
+        ),
+        order=alt.Order("stack_order:Q"),
+        tooltip=["Process", "Segment", alt.Tooltip("Points:Q", format=".2f")],
+    )
+    .transform_calculate(
+        stack_order="datum.Segment == 'Achieved' ? 0 : "
+                    "(datum.Segment == 'Unanswered' ? 1 : 2)"
+    )
+    .properties(height=300)
+)
+st.altair_chart(chart, width='stretch')
+st.caption(
+    "🟩 Achieved points · 🟧 Unanswered items (not yet scored) · "
+    "🟥 Missed points on answered items — each bar totals the domain maximum."
+)
+
+# Tabs per process — labels include answered/total question counts
 exp_counter = 0          # stable, deterministic id per expander across reruns
-tabs = st.tabs([p for p in PROCESS_ORDER])
+tab_labels = [
+    f"{p} ({proc_counts[p][0]}/{proc_counts[p][1]})" for p in PROCESS_ORDER
+]
+tabs = st.tabs(tab_labels)
 for tab, proc in zip(tabs, PROCESS_ORDER):
     with tab:
         pmax = PROCESS_MAX[proc]
         pval = proc_score[proc]
         st.markdown(
             f"### {proc} &nbsp; "
-            f"<span class='weight-tag'>{pval:.2f} / {pmax:.0f} points</span>",
+            f"<span class='weight-tag'>{pval:.2f} / {pmax:.0f} points · "
+            f"{proc_counts[proc][0]}/{proc_counts[proc][1]} questions answered"
+            f"</span>",
             unsafe_allow_html=True,
         )
         proc_items = [it for it in ITEMS if it["process"] == proc]
