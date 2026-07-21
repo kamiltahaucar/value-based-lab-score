@@ -90,6 +90,16 @@ def reset_all():
     st.session_state["open_sub"] = None
 
 
+# Only the selected domain's questions are rendered at a time. Streamlit
+# normally garbage-collects the state of widgets that were not rendered in a
+# run, which would erase answers when switching domains. Re-assigning each
+# existing value marks it as persistent app state and prevents that cleanup.
+for _it in ITEMS:
+    _k = _key(_it["id"])
+    if _k in st.session_state:
+        st.session_state[_k] = st.session_state[_k]
+
+
 def remember_open(exp_id):
     """Keep the expander the user is editing open across reruns."""
     st.session_state["open_sub"] = exp_id
@@ -314,55 +324,61 @@ st.caption(
     "🟥 Missed points on answered items — each bar totals the domain maximum."
 )
 
-# Tabs per process — labels include answered/total question counts
-exp_counter = 0          # stable, deterministic id per expander across reruns
-tab_labels = [
-    f"{p} ({proc_counts[p][0]}/{proc_counts[p][1]})" for p in PROCESS_ORDER
-]
-tabs = st.tabs(tab_labels)
-for tab, proc in zip(tabs, PROCESS_ORDER):
-    with tab:
-        pmax = PROCESS_MAX[proc]
-        pval = proc_score[proc]
-        st.markdown(
-            f"### {proc} &nbsp; "
-            f"<span class='weight-tag'>{pval:.2f} / {pmax:.0f} points · "
-            f"{proc_counts[proc][0]}/{proc_counts[proc][1]} questions answered"
-            f"</span>",
-            unsafe_allow_html=True,
+# Domain selector — replaces st.tabs. Tab labels that change (live counts)
+# made Streamlit treat them as new tabs and jump back to the first one.
+# segmented_control keys on stable VALUES (process names) while format_func
+# renders the live counts, so the active domain survives every rerun.
+selected_proc = st.segmented_control(
+    "Domain",
+    options=PROCESS_ORDER,
+    format_func=lambda p: f"{p} ({proc_counts[p][0]}/{proc_counts[p][1]})",
+    default=PROCESS_ORDER[0],
+    key="active_proc",
+    label_visibility="collapsed",
+)
+proc = selected_proc if selected_proc is not None else PROCESS_ORDER[0]
+
+pmax = PROCESS_MAX[proc]
+pval = proc_score[proc]
+st.markdown(
+    f"### {proc} &nbsp; "
+    f"<span class='weight-tag'>{pval:.2f} / {pmax:.0f} points · "
+    f"{proc_counts[proc][0]}/{proc_counts[proc][1]} questions answered"
+    f"</span>",
+    unsafe_allow_html=True,
+)
+proc_items = [it for it in ITEMS if it["process"] == proc]
+
+# group by Section, then Subheading
+sections = []
+for it in proc_items:
+    if not sections or sections[-1][0] != it["section"]:
+        sections.append((it["section"], []))
+    sections[-1][1].append(it)
+
+for section_name, sec_items in sections:
+    st.markdown(f"#### {section_name}")
+    subs = []
+    for it in sec_items:
+        if not subs or subs[-1][0] != it["subheading"]:
+            subs.append((it["subheading"], []))
+        subs[-1][1].append(it)
+    for sub_name, sub_items in subs:
+        # stable id derived from content, not a counter, so it never shifts
+        exp_id = f"exp::{proc}::{section_name}::{sub_name}"
+        answered_sub = sum(
+            1 for it in sub_items if get_selection(it["id"]) is not None
         )
-        proc_items = [it for it in ITEMS if it["process"] == proc]
-
-        # group by Section, then Subheading
-        sections = []
-        for it in proc_items:
-            if not sections or sections[-1][0] != it["section"]:
-                sections.append((it["section"], []))
-            sections[-1][1].append(it)
-
-        for section_name, sec_items in sections:
-            st.markdown(f"#### {section_name}")
-            subs = []
-            for it in sec_items:
-                if not subs or subs[-1][0] != it["subheading"]:
-                    subs.append((it["subheading"], []))
-                subs[-1][1].append(it)
-            for sub_name, sub_items in subs:
-                exp_id = f"exp_{exp_counter}"
-                exp_counter += 1
-                answered_sub = sum(
-                    1 for it in sub_items if get_selection(it["id"]) is not None
-                )
-                with st.expander(
-                    f"{sub_name}  ·  {answered_sub}/{len(sub_items)} answered",
-                    expanded=(st.session_state.get("open_sub") == exp_id),
-                ):
-                    st.markdown(
-                        f"<div class='subhead'>{sub_name}</div>",
-                        unsafe_allow_html=True,
-                    )
-                    for it in sub_items:
-                        render_item(it, exp_id)
+        with st.expander(
+            f"{sub_name}  ·  {answered_sub}/{len(sub_items)} answered",
+            expanded=(st.session_state.get("open_sub") == exp_id),
+        ):
+            st.markdown(
+                f"<div class='subhead'>{sub_name}</div>",
+                unsafe_allow_html=True,
+            )
+            for it in sub_items:
+                render_item(it, exp_id)
 
 st.divider()
 st.caption(
