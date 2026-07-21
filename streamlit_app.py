@@ -324,19 +324,43 @@ st.caption(
     "🟥 Missed points on answered items — each bar totals the domain maximum."
 )
 
-# Domain selector — replaces st.tabs. Tab labels that change (live counts)
-# made Streamlit treat them as new tabs and jump back to the first one.
-# segmented_control keys on stable VALUES (process names) while format_func
-# renders the live counts, so the active domain survives every rerun.
+# Domain selector.
+# ROOT CAUSE of the "jumps back to the first domain" bug: any widget whose
+# option LABELS change between reruns (tabs, segmented_control with live
+# counts, ...) is treated by Streamlit's frontend as a brand-new widget, so
+# the selection resets to the default. The fix is to keep the widget's
+# options and labels 100% static, and render the live answered-counts in a
+# plain text line below — text can change freely because it holds no state.
+if "active_proc" not in st.session_state:
+    st.session_state["active_proc"] = PROCESS_ORDER[0]
+
 selected_proc = st.segmented_control(
     "Domain",
-    options=PROCESS_ORDER,
-    format_func=lambda p: f"{p} ({proc_counts[p][0]}/{proc_counts[p][1]})",
-    default=PROCESS_ORDER[0],
+    options=PROCESS_ORDER,          # static values, static labels — never resets
     key="active_proc",
     label_visibility="collapsed",
 )
-proc = selected_proc if selected_proc is not None else PROCESS_ORDER[0]
+# segmented_control returns None if the user clicks the active option to
+# deselect it; fall back to the last known domain in that case.
+if selected_proc is None:
+    selected_proc = st.session_state.get("last_proc", PROCESS_ORDER[0])
+proc = selected_proc
+st.session_state["last_proc"] = proc
+
+# Live answered/total counts for every domain (plain text, safe to update).
+_SHORT = {
+    "Traceability through total testing process": "Traceability",
+    "Level of automation and digitalization": "Automation",
+    "Quality of laboratory information": "Lab information",
+    "Clinical interaction": "Clinical",
+    "Innovation and research": "Innovation",
+}
+counts_line = " · ".join(
+    f"{'**' if p == proc else ''}{_SHORT.get(p, p.split()[0])}"
+    f" {proc_counts[p][0]}/{proc_counts[p][1]}{'**' if p == proc else ''}"
+    for p in PROCESS_ORDER
+)
+st.caption(counts_line)
 
 pmax = PROCESS_MAX[proc]
 pval = proc_score[proc]
